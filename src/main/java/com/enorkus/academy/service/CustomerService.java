@@ -35,11 +35,18 @@ public class CustomerService {
             personalNumber = customer.getPersonalNumber().substring(0, 4) + "-" + customer.getPersonalNumber().substring(4, customer.getPersonalNumber().length());
         }
 
-        customer.setFirstName(firstName);
-        customer.setLastName(lastName);
-        customer.setPersonalNumber(personalNumber);
+        Customer customerToSave = new Customer.CustomerBuilder(firstName, lastName, personalNumber)
+                .middleName(customer.getMiddleName())
+                .age(customer.getAge())
+                .countryCode(customer.getCountryCode())
+                .city(customer.getCity())
+                .monthlyIncome(customer.getMonthlyIncome())
+                .employer(customer.getEmployer())
+                .gender(customer.getGender())
+                .maritalStatus(customer.getMaritalStatus())
+                .build();
 
-        customerRepository.insert(customer);
+        customerRepository.insert(customerToSave);
     }
 
     public void deleteCustomer(@PathVariable String customerId) {
